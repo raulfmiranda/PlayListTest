@@ -3,11 +3,13 @@ package playlistteste.mentoria.com.playlisttest.ui.activity;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class MusicasActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listViewMusicas);
         final MusicasAdapter adapter = new MusicasAdapter(this);
 
-        Long id = getIntent().getLongExtra("id", -1);
+        final Long id = getIntent().getLongExtra("id", -1);
             listView.setAdapter(adapter);
 
 
@@ -66,7 +68,7 @@ public class MusicasActivity extends AppCompatActivity {
         ordemAlfabetica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  copiaMusicas = new ArrayList<>(customApplication.getPlaylistControl().retrieveLista().get(Integer.parseInt(posicao)).getMusicas());
+                copiaMusicas = new ArrayList<Musica>(customApplication.getPlaylistControl().getPlayListPorId(id).getMusicas());
                 MusicaComparator comparator = new MusicaComparator();
                 Collections.sort(copiaMusicas, comparator);
 

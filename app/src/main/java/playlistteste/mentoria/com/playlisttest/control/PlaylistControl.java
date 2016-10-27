@@ -4,7 +4,9 @@ import android.os.SystemClock;
 import android.text.format.DateUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import playlistteste.mentoria.com.playlisttest.model.Estilo;
 import playlistteste.mentoria.com.playlisttest.model.Musica;
@@ -12,28 +14,31 @@ import playlistteste.mentoria.com.playlisttest.model.PlayList;
 
 
 public class PlaylistControl {
-    private final List<PlayList> lista = new ArrayList<PlayList>();
+    private final Map<Long, PlayList> lista = new HashMap<>();
 
     public PlaylistControl() {
     }
 
     public void addPlaylist(PlayList playList) {
-        lista.add(playList);
+        lista.put(playList.getId(), playList);
     }
 
     public List<PlayList> retrieveLista() {
         if (lista.isEmpty()) {
             List<PlayList> playLists = carregarLista();
             if (playLists != null) {
-                lista.addAll(playLists);
+                for(PlayList pl : playLists) {
+                    lista.put(pl.getId(), pl);
+                }
+                //lista.putAll(playLists);
             }
         }
-        return new ArrayList<>(lista);
+        return new ArrayList<>(lista.values());
     }
-
 
     private List<PlayList> carregarLista() {
         SystemClock.sleep(5 * DateUtils.SECOND_IN_MILLIS);
+
         List<PlayList> listCarregada = new ArrayList<>();
         listCarregada.add(newSertanejo());
         listCarregada.add(newRock());
@@ -82,10 +87,10 @@ public class PlaylistControl {
 
     public PlayList newPlaylist(String nome) {
         List<Musica> musicas = new ArrayList<>();
-        musicas.add(new Musica("A-Nome1", "A-Autor1"));
-        musicas.add(new Musica("C-Nome3", "C-Autor3"));
-        musicas.add(new Musica("E-Nome2", "E-Autor2"));
-        musicas.add(new Musica("B-Nome1", "B-Autor1"));
+        musicas.add(new Musica("A-"+nome, "A-Autor1"));
+        musicas.add(new Musica("C-"+nome, "C-Autor3"));
+        musicas.add(new Musica("E-"+nome, "E-Autor2"));
+        musicas.add(new Musica("B-"+nome, "B-Autor1"));
 
         PlayList.Builder builder = new PlayList.Builder(System.nanoTime(), nome)
                 .setEstilo(Estilo.OUTROS)
@@ -94,14 +99,6 @@ public class PlaylistControl {
     }
 
     public PlayList getPlayListPorId(Long id) {
-        List<PlayList> playLists = retrieveLista();
-        PlayList playlist = null;
-        for (PlayList pl: playLists) {
-            if (pl.getId().equals(id)) {
-                playlist = pl;
-                break;
-            }
-        }
-        return playlist;
+        return lista.get(id);
     }
 }

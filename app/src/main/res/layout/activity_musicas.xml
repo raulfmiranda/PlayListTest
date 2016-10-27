@@ -27,7 +27,7 @@
             android:layout_below="@id/titulo"
             android:padding="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="400dp">
+            android:layout_height="wrap_content">
         </ListView>
         <android.support.v4.widget.ContentLoadingProgressBar
             android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
     <Button
         android:id="@+id/ordemAlfabetica"
         android:text="Ordem Alfabética"
-        android:layout_below="@id/listViewMusicas"
+        android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

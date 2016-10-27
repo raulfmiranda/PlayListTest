@@ -7,7 +7,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import playlistteste.mentoria.com.playlisttest.R;
 import playlistteste.mentoria.com.playlisttest.model.PlayList;
@@ -45,6 +47,7 @@ public class PlaylistAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         View view = convertView == null ?
                 activity.getLayoutInflater().inflate(R.layout.row_playlist, parent, false)
                 : convertView;
@@ -53,18 +56,6 @@ public class PlaylistAdapter extends BaseAdapter{
 
         PlayList item = (PlayList) getItem(position);
         nomeTextView.setText(item.getNome());
-
-        /*
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                List<PlayList> copia = new ArrayList<>();
-
-                copia.addAll(items);
-                copia.addAll(items);
-                setItems(copia);
-            }
-        });*/
 
         return view;
     }
