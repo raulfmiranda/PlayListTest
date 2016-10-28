@@ -3,12 +3,22 @@ package playlistteste.mentoria.com.playlisttest.model;
 import java.util.Comparator;
 
 public class Musica {
+    private Long id;
     private String nome;
     private String autor;
 
-    public Musica(String nome, String autor) {
+    public Musica(Long id, String nome, String autor) {
+        this.id = id;
         this.nome = nome;
         this.autor = autor;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getAutor() {
@@ -34,16 +44,12 @@ public class Musica {
 
         Musica musica = (Musica) o;
 
-        if (nome != null ? !nome.equals(musica.nome) : musica.nome != null) return false;
-        return autor != null ? autor.equals(musica.autor) : musica.autor == null;
+        return id != null ? id.equals(musica.id) : musica.id == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = nome != null ? nome.hashCode() : 0;
-        result = 31 * result + (autor != null ? autor.hashCode() : 0);
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
-
 }

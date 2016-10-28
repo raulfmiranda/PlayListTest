@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public List<PlayList> doInBackground(Void... voids) {
                 List<PlayList> playLists = customApplication.getPlaylistControl().retrieveLista();
+                customApplication.getMusicasControl().retrieveMusicas();
                 return playLists;
             }
 

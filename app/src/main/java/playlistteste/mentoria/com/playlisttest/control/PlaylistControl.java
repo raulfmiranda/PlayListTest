@@ -30,7 +30,6 @@ public class PlaylistControl {
                 for(PlayList pl : playLists) {
                     lista.put(pl.getId(), pl);
                 }
-                //lista.putAll(playLists);
             }
         }
         return new ArrayList<>(lista.values());
@@ -48,10 +47,10 @@ public class PlaylistControl {
 
     public PlayList newMpb() {
         List<Musica> musicas = new ArrayList<>();
-        musicas.add(new Musica("Z-NomeMpb1", "A-AutorMpb1"));
-        musicas.add(new Musica("T-NomeMpb3", "C-AutorMpb3"));
-        musicas.add(new Musica("S-NomeMpb2", "E-AutorMpb2"));
-        musicas.add(new Musica("B-NomeMpb1", "X-AutorMpb1"));
+        musicas.add(new Musica(System.nanoTime(), "Z-NomeMpb1", "A-AutorMpb1"));
+        musicas.add(new Musica(System.nanoTime(), "T-NomeMpb3", "C-AutorMpb3"));
+        musicas.add(new Musica(System.nanoTime(), "S-NomeMpb2", "E-AutorMpb2"));
+        musicas.add(new Musica(System.nanoTime(), "B-NomeMpb1", "X-AutorMpb1"));
 
         PlayList.Builder builder = new PlayList.Builder(System.nanoTime(),"Música Popular")
                 .setEstilo(Estilo.MPB)
@@ -61,10 +60,10 @@ public class PlaylistControl {
 
     public  PlayList newRock() {
         List<Musica> musicas = new ArrayList<>();
-        musicas.add(new Musica("Z-NomeRock1", "Z-AutorRock1"));
-        musicas.add(new Musica("C-NomeRock3", "C-AutorRock3"));
-        musicas.add(new Musica("E-NomeRock2", "E-AutorRock2"));
-        musicas.add(new Musica("X-NomeRock1", "X-AutorRock1"));
+        musicas.add(new Musica(System.nanoTime(), "Z-NomeRock1", "Z-AutorRock1"));
+        musicas.add(new Musica(System.nanoTime(), "C-NomeRock3", "C-AutorRock3"));
+        musicas.add(new Musica(System.nanoTime(), "E-NomeRock2", "E-AutorRock2"));
+        musicas.add(new Musica(System.nanoTime(), "X-NomeRock1", "X-AutorRock1"));
 
         PlayList.Builder builder = new PlayList.Builder(System.nanoTime(),"Roqueiras Punk")
                 .setEstilo(Estilo.ROCK)
@@ -74,10 +73,10 @@ public class PlaylistControl {
 
     public  PlayList newSertanejo() {
         List<Musica> musicas = new ArrayList<>();
-        musicas.add(new Musica("A-NomeSertanejo1", "A-AutorSertanejo1"));
-        musicas.add(new Musica("C-NomeSertanejo3", "C-AutorSertanejo3"));
-        musicas.add(new Musica("E-NomeSertanejo2", "E-AutorSertanejo2"));
-        musicas.add(new Musica("B-NomeSertanejo1", "B-AutorSertanejo1"));
+        musicas.add(new Musica(System.nanoTime(), "A-NomeSertanejo1", "A-AutorSertanejo1"));
+        musicas.add(new Musica(System.nanoTime(), "C-NomeSertanejo3", "C-AutorSertanejo3"));
+        musicas.add(new Musica(System.nanoTime(), "E-NomeSertanejo2", "E-AutorSertanejo2"));
+        musicas.add(new Musica(System.nanoTime(), "B-NomeSertanejo1", "B-AutorSertanejo1"));
 
         PlayList.Builder builder = new PlayList.Builder(System.nanoTime(), "Sertanejas UAI")
                 .setEstilo(Estilo.SERTANEJO)
@@ -87,10 +86,10 @@ public class PlaylistControl {
 
     public PlayList newPlaylist(String nome) {
         List<Musica> musicas = new ArrayList<>();
-        musicas.add(new Musica("A-"+nome, "A-Autor1"));
-        musicas.add(new Musica("C-"+nome, "C-Autor3"));
-        musicas.add(new Musica("E-"+nome, "E-Autor2"));
-        musicas.add(new Musica("B-"+nome, "B-Autor1"));
+        musicas.add(new Musica(System.nanoTime(), "A-"+nome, "A-Autor1"));
+        musicas.add(new Musica(System.nanoTime(), "C-"+nome, "C-Autor3"));
+        musicas.add(new Musica(System.nanoTime(), "E-"+nome, "E-Autor2"));
+        musicas.add(new Musica(System.nanoTime(), "B-"+nome, "B-Autor1"));
 
         PlayList.Builder builder = new PlayList.Builder(System.nanoTime(), nome)
                 .setEstilo(Estilo.OUTROS)

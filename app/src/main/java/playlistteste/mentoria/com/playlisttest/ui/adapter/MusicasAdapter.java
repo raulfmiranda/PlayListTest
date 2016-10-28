@@ -54,18 +54,6 @@ public class MusicasAdapter extends BaseAdapter{
         Musica item = (Musica) getItem(position);
         nomeTextView.setText(item.getNome());
 
-        /*
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                List<PlayList> copia = new ArrayList<>();
-
-                copia.addAll(items);
-                copia.addAll(items);
-                setItems(copia);
-            }
-        });*/
-
         return view;
     }
 }
