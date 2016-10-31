@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">PlayListTest</string>
+    <string name="adicionar">Adicionar</string>
+    <string name="salvar">Salvar</string>
+    <string name="nova_playlist">Nova Playlist</string>
+    <string name="musicas">Músicas</string>
+    <string name="nova_musica">Nova Música</string>
+    <string name="done">Concluido</string>
 </resources>

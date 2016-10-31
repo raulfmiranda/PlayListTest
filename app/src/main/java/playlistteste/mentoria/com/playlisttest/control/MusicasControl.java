@@ -26,7 +26,7 @@ public class MusicasControl {
     }
 
     private List<Musica> carregarMusicas() {
-        SystemClock.sleep(5 * DateUtils.SECOND_IN_MILLIS);
+        SystemClock.sleep(2 * DateUtils.SECOND_IN_MILLIS);
 
         List<Musica> musicasCarregadas = new ArrayList<>();
         musicasCarregadas.add(new Musica(System.nanoTime(), "Felicidade", "Marcelo Jeneci"));

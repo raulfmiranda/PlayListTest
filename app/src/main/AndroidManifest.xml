@@ -16,10 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.MusicasActivity" />
-        <activity android:name=".ui.activity.CadastraPlaylistActivity" />
-        <activity android:name=".ui.activity.MusicasListaActivity" />
-        <activity android:name=".ui.activity.MusicaAdicionarActivity"></activity>
+        <activity android:name=".ui.activity.MusicasPlaylistActivity" />
+        <activity android:name=".ui.activity.CadastraPlaylistActivity"  android:label="@string/nova_playlist"/>
+        <activity android:name=".ui.activity.MusicasListaActivity"  android:label="@string/musicas"/>
+        <activity android:name=".ui.activity.MusicaAdicionarActivity" android:label="@string/nova_musica"></activity>
     </application>
 
 </manifest>

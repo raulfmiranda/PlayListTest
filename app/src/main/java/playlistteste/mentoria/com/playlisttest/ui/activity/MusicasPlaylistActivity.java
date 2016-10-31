@@ -20,7 +20,7 @@ import playlistteste.mentoria.com.playlisttest.model.Musica;
 import playlistteste.mentoria.com.playlisttest.model.PlayList;
 import playlistteste.mentoria.com.playlisttest.ui.adapter.*;
 
-public class MusicasActivity extends AppCompatActivity {
+public class MusicasPlaylistActivity extends AppCompatActivity {
     private TextView tituloPlaylist;
     private Button ordemAlfabetica;
     private List<Musica> copiaMusicas;

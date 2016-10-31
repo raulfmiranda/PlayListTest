@@ -36,7 +36,7 @@ public class PlaylistControl {
     }
 
     private List<PlayList> carregarLista() {
-        SystemClock.sleep(5 * DateUtils.SECOND_IN_MILLIS);
+        SystemClock.sleep(2 * DateUtils.SECOND_IN_MILLIS);
 
         List<PlayList> listCarregada = new ArrayList<>();
         listCarregada.add(newSertanejo());
