@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +20,7 @@ import playlistteste.mentoria.com.playlisttest.application.CustomApplication;
 import playlistteste.mentoria.com.playlisttest.model.PlayList;
 import playlistteste.mentoria.com.playlisttest.ui.adapter.PlaylistAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BasicActivity {
     private View progressView;
     private final PlaylistAdapter adapter = new PlaylistAdapter(this);
     private List<PlayList> playlists;
@@ -28,12 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        setContentView(R.layout.activity_main);
-
         progressView = findViewById(R.id.progress);
-
-        final CustomApplication customApplication = (CustomApplication) getApplicationContext();
 
         final ListView listView;
         listView = (ListView) findViewById(R.id.listView);
@@ -52,10 +48,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
-        final CustomApplication customApplication = (CustomApplication) getApplicationContext();
+        final CustomApplication customApplication = getCustomApplication();
 
         new AsyncTask<Void, Void, List<PlayList>>() {
             @Override
@@ -82,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }.execute();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

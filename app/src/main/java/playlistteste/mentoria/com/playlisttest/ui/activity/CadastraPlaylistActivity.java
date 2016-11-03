@@ -6,8 +6,10 @@ import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +28,7 @@ import playlistteste.mentoria.com.playlisttest.control.PlaylistControl;
 import playlistteste.mentoria.com.playlisttest.model.Musica;
 import playlistteste.mentoria.com.playlisttest.ui.adapter.MusicasAdapter;
 
-public class CadastraPlaylistActivity extends AppCompatActivity {
+public class CadastraPlaylistActivity extends BasicActivity {
     private final static  int REQUEST_CODE_SELECIONA_MUSICA = 1;
     private Button cadastrar;
     private EditText nomePlaylist;
@@ -39,10 +41,11 @@ public class CadastraPlaylistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastra_playlist);
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
 
         final CustomApplication customApplication = getCustomApplication();
         adapter = new MusicasAdapter(this);
@@ -102,6 +105,11 @@ public class CadastraPlaylistActivity extends AppCompatActivity {
 
     protected CustomApplication getCustomApplication() {
         return (CustomApplication) getApplicationContext();
+    }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_cadastra_playlist;
     }
 
     @Override

@@ -3,8 +3,10 @@ package playlistteste.mentoria.com.playlisttest.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +22,7 @@ import playlistteste.mentoria.com.playlisttest.control.PlaylistControl;
 import playlistteste.mentoria.com.playlisttest.model.Musica;
 import playlistteste.mentoria.com.playlisttest.ui.adapter.MusicasAdapter;
 
-public class MusicasListaActivity extends AppCompatActivity {
+public class MusicasListaActivity extends BasicActivity {
     private ListView listView;
     private View progressView;
     private MusicasAdapter adapter;
@@ -30,11 +32,19 @@ public class MusicasListaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_musicas_lista);
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         final CustomApplication customApplication = (CustomApplication) getApplicationContext();
         adapter = new MusicasAdapter(this);
 
         listView = (ListView) findViewById(R.id.listView);
         progressView = findViewById(R.id.progress);
+
+
 
         new AsyncTask<Void, Void, List<Musica>>() {
             @Override
@@ -94,4 +104,8 @@ public class MusicasListaActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_musicas_lista;
+    }
 }

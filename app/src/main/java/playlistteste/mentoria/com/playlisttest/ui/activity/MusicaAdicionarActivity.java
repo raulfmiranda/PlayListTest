@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +15,7 @@ import playlistteste.mentoria.com.playlisttest.R;
 import playlistteste.mentoria.com.playlisttest.application.CustomApplication;
 import playlistteste.mentoria.com.playlisttest.model.Musica;
 
-public class MusicaAdicionarActivity extends AppCompatActivity {
+public class MusicaAdicionarActivity extends BasicActivity {
     private EditText nomeMusica;
     private EditText autorMusica;
     private Button botaoCadastrarMusica;
@@ -23,6 +24,9 @@ public class MusicaAdicionarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_musica_adicionar);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
         final CustomApplication customApplication = (CustomApplication) getApplicationContext();
 
@@ -50,5 +54,10 @@ public class MusicaAdicionarActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_musica_adicionar;
     }
 }
