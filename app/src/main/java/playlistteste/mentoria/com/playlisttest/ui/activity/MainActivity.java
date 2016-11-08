@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,17 +14,22 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import playlistteste.mentoria.com.playlisttest.R;
 import playlistteste.mentoria.com.playlisttest.application.CustomApplication;
+import playlistteste.mentoria.com.playlisttest.model.Musica;
 import playlistteste.mentoria.com.playlisttest.model.PlayList;
 import playlistteste.mentoria.com.playlisttest.ui.adapter.PlaylistAdapter;
+import playlistteste.mentoria.com.playlisttest.ui.adapter.PlaylistAdapter2;
 
 public class MainActivity extends BasicActivity {
     private View progressView;
-    private final PlaylistAdapter adapter = new PlaylistAdapter(this);
+    //private final PlaylistAdapter adapter = new PlaylistAdapter(this);
+    private final PlaylistAdapter2 adapter = new PlaylistAdapter2(this);
     private List<PlayList> playlists;
+    private List<Integer> playlistsSelected = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,7 @@ public class MainActivity extends BasicActivity {
 
         listView.setAdapter(adapter);
 
+        /*
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -43,6 +50,23 @@ public class MainActivity extends BasicActivity {
                 PlayList item = (PlayList) adapter.getItem(i);
                 intent.putExtra("id", item.getId());
                 startActivity(intent);
+            }
+        }); */
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Object item = adapter.getItem(i);
+
+                if(item instanceof PlayList) {
+                    if(playlistsSelected.contains(i)) {
+                        playlistsSelected.remove(i);
+                    } else {
+                        playlistsSelected.add(i);
+                    }
+                    adapter.setItems(playlists, playlistsSelected);
+                }
+
             }
         });
     }
