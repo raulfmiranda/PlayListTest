@@ -16,6 +16,8 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import playlistteste.mentoria.com.playlisttest.R;
 import playlistteste.mentoria.com.playlisttest.application.CustomApplication;
@@ -29,7 +31,7 @@ public class MainActivity extends BasicActivity {
     //private final PlaylistAdapter adapter = new PlaylistAdapter(this);
     private final PlaylistAdapter2 adapter = new PlaylistAdapter2(this);
     private List<PlayList> playlists;
-    private List<Integer> playlistsSelected = new ArrayList<>();
+    private Set<Long> playlistsSelected = new TreeSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,14 +61,14 @@ public class MainActivity extends BasicActivity {
                 Object item = adapter.getItem(i);
 
                 if(item instanceof PlayList) {
-                    if(playlistsSelected.contains(i)) {
-                        playlistsSelected.remove(i);
+                    Long id = ((PlayList)item).getId();
+                    if(playlistsSelected.contains(id)) {
+                        playlistsSelected.remove(id);
                     } else {
-                        playlistsSelected.add(i);
+                        playlistsSelected.add(id);
                     }
                     adapter.setItems(playlists, playlistsSelected);
                 }
-
             }
         });
     }
