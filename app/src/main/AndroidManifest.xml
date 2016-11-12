@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.MusicasPlaylistActivity" />
+
         <activity android:name=".ui.activity.CadastraPlaylistActivity"  android:label="@string/nova_playlist"/>
         <activity android:name=".ui.activity.MusicasListaActivity"  android:label="@string/musicas"/>
         <activity android:name=".ui.activity.MusicaAdicionarActivity" android:label="@string/nova_musica"></activity>

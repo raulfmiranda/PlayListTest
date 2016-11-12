@@ -4,13 +4,15 @@ import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,11 +29,10 @@ import playlistteste.mentoria.com.playlisttest.model.PlayList;
 import playlistteste.mentoria.com.playlisttest.ui.adapter.*;
 
 public class MusicasPlaylistActivity extends BasicActivity {
+    private final MusicasRecyclerAdapter adapter = new MusicasRecyclerAdapter(this);
     private TextView tituloPlaylist;
     private Button ordemAlfabetica;
     private List<Musica> copiaMusicas;
-    private ListView listView;
-    private View progressView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +42,19 @@ public class MusicasPlaylistActivity extends BasicActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        progressView = findViewById(R.id.progress);
         final CustomApplication customApplication = (CustomApplication) getApplicationContext();
 
-        listView = (ListView) findViewById(R.id.listViewMusicas);
-        final MusicasAdapter adapter = new MusicasAdapter(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        recyclerView.setLayoutManager(layoutManager);
 
         final Long id = getIntent().getLongExtra("id", -1);
-            listView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
+
 
 
         ActionBar actionBar = getSupportActionBar();
@@ -59,7 +65,7 @@ public class MusicasPlaylistActivity extends BasicActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                progressView.setVisibility(View.VISIBLE);
+                //progressView.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -70,7 +76,7 @@ public class MusicasPlaylistActivity extends BasicActivity {
             @Override
             protected void onPostExecute(PlayList playList) {
                 super.onPostExecute(playList);
-                progressView.setVisibility(View.GONE);
+                //progressView.setVisibility(View.GONE);
                 adapter.setItems(playList.getMusicas());
             }
         }.execute(id);
@@ -85,7 +91,7 @@ public class MusicasPlaylistActivity extends BasicActivity {
                 Collections.sort(copiaMusicas, comparator);
 
                 adapter.setItems(copiaMusicas);
-                listView.setAdapter(adapter);
+                recyclerView.setAdapter(adapter);
             }
         });
     }

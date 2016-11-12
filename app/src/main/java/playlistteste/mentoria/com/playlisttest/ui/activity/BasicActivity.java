@@ -14,8 +14,12 @@ public abstract class BasicActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = getToolbar();
         setSupportActionBar(myToolbar);
+    }
+
+    protected Toolbar getToolbar() {
+        return (Toolbar) findViewById(R.id.my_toolbar);
     }
 
     protected CustomApplication getCustomApplication() {

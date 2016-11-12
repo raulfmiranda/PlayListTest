@@ -53,6 +53,7 @@ public class CadastraPlaylistActivity extends BasicActivity {
         cadastrar = (Button) findViewById(R.id.cadastrar);
         nomePlaylist = (EditText) findViewById(R.id.editText);
 
+
         nomePlaylist.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

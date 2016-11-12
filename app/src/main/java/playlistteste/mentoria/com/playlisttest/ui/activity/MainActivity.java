@@ -1,10 +1,19 @@
 package playlistteste.mentoria.com.playlisttest.ui.activity;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -14,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -25,13 +35,12 @@ import playlistteste.mentoria.com.playlisttest.model.Musica;
 import playlistteste.mentoria.com.playlisttest.model.PlayList;
 import playlistteste.mentoria.com.playlisttest.ui.adapter.PlaylistAdapter;
 import playlistteste.mentoria.com.playlisttest.ui.adapter.PlaylistAdapter2;
+import playlistteste.mentoria.com.playlisttest.ui.adapter.PlaylistRecyclerAdapter;
 
 public class MainActivity extends BasicActivity {
     private View progressView;
-    //private final PlaylistAdapter adapter = new PlaylistAdapter(this);
-    private final PlaylistAdapter2 adapter = new PlaylistAdapter2(this);
+    private final PlaylistRecyclerAdapter adapter = new PlaylistRecyclerAdapter(this);
     private List<PlayList> playlists;
-    private Set<Long> playlistsSelected = new TreeSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +48,21 @@ public class MainActivity extends BasicActivity {
 
         progressView = findViewById(R.id.progress);
 
-        final ListView listView;
-        listView = (ListView) findViewById(R.id.listView);
+        getToolbar().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                playSound();
+            }
+        });
 
-        listView.setAdapter(adapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
 
         /*
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -55,23 +75,39 @@ public class MainActivity extends BasicActivity {
             }
         }); */
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Object item = adapter.getItem(i);
-
-                if(item instanceof PlayList) {
-                    Long id = ((PlayList)item).getId();
-                    if(playlistsSelected.contains(id)) {
-                        playlistsSelected.remove(id);
-                    } else {
-                        playlistsSelected.add(id);
-                    }
-                    adapter.setItems(playlists, playlistsSelected);
-                }
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Object item = adapter.getItem(i);
+//
+//                if (item instanceof PlayList) {
+//                    Long id = ((PlayList) item).getId();
+//                    if (playlistsSelected.contains(id)) {
+//                        playlistsSelected.remove(id);
+//                    } else {
+//                        playlistsSelected.add(id);
+//                    }
+//                    adapter.setItems(playlists, playlistsSelected);
+//                }
+//            }
+//        });
     }
+
+//    @TargetApi(24) TODO: explorar usando outro tipo de setDataSource() pra ser compativel ccom o teu celular API 18
+//    private void playSound() {
+//        AssetFileDescriptor assetFileDescriptor = null;
+//        try {
+//            assetFileDescriptor = getAssets().openFd("cartoon001.wav");
+//
+//            MediaPlayer mediaPlayer = new MediaPlayer();
+//            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//            mediaPlayer.setDataSource(assetFileDescriptor);
+//            mediaPlayer.prepare();
+//            mediaPlayer.start();
+//        } catch (Exception e) {
+//            Log.e("MainActivity", "Error playing audio", e);
+//        }
+//    }
 
     @Override
     protected int getLayoutResId() {
@@ -109,7 +145,6 @@ public class MainActivity extends BasicActivity {
             }
         }.execute();
     }
-
 
 
     @Override

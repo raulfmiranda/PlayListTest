@@ -2,6 +2,7 @@ package playlistteste.mentoria.com.playlisttest.ui.adapter;
 
 import android.app.Activity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -45,7 +46,13 @@ public class PlaylistAdapter2 extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        return getItem(position) instanceof PlayList ? PLAYLIST : MUSIC;
+        if (getItem(position) instanceof PlayList) {
+            return PLAYLIST;
+        } else if (getItem(position) instanceof Musica) {
+            return MUSIC;
+        } else {
+            throw new IllegalStateException("View Type não suportado");
+        }
     }
 
     @Override
@@ -54,25 +61,17 @@ public class PlaylistAdapter2 extends BaseAdapter {
     }
 
     public void setItems(List<PlayList> novaLista) {
-        items.clear();
-        List<Musica> musicas;
-
-        for (PlayList playlist: novaLista) {
-            items.add(playlist);
-        }
-        notifyDataSetChanged();
+        setItems(novaLista, null);
     }
 
-    public void setItems(List<PlayList> novaLista, Set<Long> ids) {
+    public void setItems(List<PlayList> novaLista, Set<Long> selectedPlayListIds) {
         items.clear();
-        List<Musica> musicas;
 
-        for (PlayList playlist: novaLista) {
+        for (PlayList playlist : novaLista) {
             items.add(playlist);
-
-            if(ids.contains(playlist.getId())) {
-                musicas = playlist.getMusicas();
-                for (Musica musica: musicas) {
+            if (selectedPlayListIds != null && selectedPlayListIds.contains(playlist.getId())) {
+                List<Musica> musicas = playlist.getMusicas();
+                for (Musica musica : musicas) {
                     items.add(musica);
                 }
             }
@@ -83,27 +82,49 @@ public class PlaylistAdapter2 extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         int type = getItemViewType(position);
-        TextView nomeTextView;
         View view;
-
-        if(convertView == null) {
-            view = type == PLAYLIST ? activity.getLayoutInflater().inflate(R.layout.row_playlist, parent, false)
-                    : activity.getLayoutInflater().inflate(R.layout.row_musica, parent, false);
+        if (convertView == null) {
+            LayoutInflater layoutInflater = activity.getLayoutInflater();
+            if (type == PLAYLIST) {
+                view = layoutInflater.inflate(R.layout.row_playlist, parent, false);
+                PlayListViewHolder viewHolder = (PlayListViewHolder) view.getTag();
+                if (viewHolder == null) {
+                    viewHolder = new PlayListViewHolder();
+                    viewHolder.nomeTextView = (TextView) view.findViewById(R.id.playlist_nome);
+                    view.setTag(viewHolder);
+                }
+            } else if (type == MUSIC) {
+                view = layoutInflater.inflate(R.layout.row_musica, parent, false);
+                MusicaViewHolder viewHolder = (MusicaViewHolder) view.getTag();
+                if (viewHolder == null) {
+                    viewHolder = new MusicaViewHolder();
+                    viewHolder.nomeTextView = (TextView) view.findViewById(R.id.musica_nome);
+                    view.setTag(viewHolder);
+                }
+            } else {
+                throw new IllegalStateException("View Type não suportado");
+            }
         } else {
             view = convertView;
         }
 
-        nomeTextView = type == PLAYLIST ? (TextView) view.findViewById(R.id.playlist_nome)
-                : (TextView) view.findViewById(R.id.musica_nome);
-
         Object item = getItem(position);
-
-        if(item instanceof PlayList) {
-            nomeTextView.setText(((PlayList)item).getNome());
-        } else {
-            nomeTextView.setText("      "+((Musica)item).getNome());
+        if (item instanceof PlayList) {
+            PlayListViewHolder playListViewHolder = (PlayListViewHolder) view.getTag();
+            playListViewHolder.nomeTextView.setText(((PlayList)item).getNome());
+        } else if (item instanceof Musica) {
+            MusicaViewHolder musicaViewHolder = (MusicaViewHolder) view.getTag();
+            musicaViewHolder.nomeTextView.setText(((Musica)item).getNome());
         }
 
         return view;
+    }
+
+    public static final class PlayListViewHolder {
+        TextView nomeTextView;
+    }
+
+    public static final class MusicaViewHolder {
+        TextView nomeTextView;
     }
 }
