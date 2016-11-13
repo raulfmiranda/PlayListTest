@@ -21,13 +21,13 @@
         android:layout_below="@id/my_toolbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <ListView
-            android:id="@+id/listView"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:backgroundTint="#000000"
             android:padding="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </ListView>
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
         <android.support.v4.widget.ContentLoadingProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

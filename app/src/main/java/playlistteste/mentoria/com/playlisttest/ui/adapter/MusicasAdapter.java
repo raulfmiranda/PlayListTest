@@ -14,6 +14,7 @@ import java.util.Set;
 
 import playlistteste.mentoria.com.playlisttest.R;
 import playlistteste.mentoria.com.playlisttest.model.Musica;
+import playlistteste.mentoria.com.playlisttest.ui.activity.MusicasListaActivity;
 
 
 public class MusicasAdapter extends BaseAdapter{
@@ -71,6 +72,7 @@ public class MusicasAdapter extends BaseAdapter{
                 } else {
                     selectedIds.add(id);
                 }
+
                 notifyDataSetChanged();
                 activity.supportInvalidateOptionsMenu();
             }

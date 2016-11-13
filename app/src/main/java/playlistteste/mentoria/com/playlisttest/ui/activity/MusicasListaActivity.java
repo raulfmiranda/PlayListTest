@@ -6,6 +6,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,11 +24,11 @@ import playlistteste.mentoria.com.playlisttest.application.CustomApplication;
 import playlistteste.mentoria.com.playlisttest.control.PlaylistControl;
 import playlistteste.mentoria.com.playlisttest.model.Musica;
 import playlistteste.mentoria.com.playlisttest.ui.adapter.MusicasAdapter;
+import playlistteste.mentoria.com.playlisttest.ui.adapter.MusicasRecyclerAdapter;
 
 public class MusicasListaActivity extends BasicActivity {
-    private ListView listView;
+    private final MusicasRecyclerAdapter adapter = new MusicasRecyclerAdapter(this);
     private View progressView;
-    private MusicasAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +42,16 @@ public class MusicasListaActivity extends BasicActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         final CustomApplication customApplication = (CustomApplication) getApplicationContext();
-        adapter = new MusicasAdapter(this);
 
-        listView = (ListView) findViewById(R.id.listView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
         progressView = findViewById(R.id.progress);
 
 
@@ -63,7 +73,7 @@ public class MusicasListaActivity extends BasicActivity {
                 super.onPostExecute(musicas);
                 progressView.setVisibility(View.GONE);
                 adapter.setItems(musicas);
-                listView.setAdapter(adapter);
+                recyclerView.setAdapter(adapter);
             }
         }.execute();
     }

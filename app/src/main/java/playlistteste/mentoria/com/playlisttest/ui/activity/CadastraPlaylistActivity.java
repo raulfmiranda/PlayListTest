@@ -6,6 +6,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,14 +30,15 @@ import playlistteste.mentoria.com.playlisttest.application.CustomApplication;
 import playlistteste.mentoria.com.playlisttest.control.PlaylistControl;
 import playlistteste.mentoria.com.playlisttest.model.Musica;
 import playlistteste.mentoria.com.playlisttest.ui.adapter.MusicasAdapter;
+import playlistteste.mentoria.com.playlisttest.ui.adapter.MusicasRecyclerAdapter;
+import playlistteste.mentoria.com.playlisttest.ui.adapter.PlaylistRecyclerAdapter;
 
 public class CadastraPlaylistActivity extends BasicActivity {
     private final static  int REQUEST_CODE_SELECIONA_MUSICA = 1;
+    private final MusicasRecyclerAdapter adapter = new MusicasRecyclerAdapter(this);
     private Button cadastrar;
     private EditText nomePlaylist;
-    private ListView listView;
     private View progressView;
-    private MusicasAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,15 @@ public class CadastraPlaylistActivity extends BasicActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         final CustomApplication customApplication = getCustomApplication();
-        adapter = new MusicasAdapter(this);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
 
         cadastrar = (Button) findViewById(R.id.cadastrar);
         nomePlaylist = (EditText) findViewById(R.id.editText);
@@ -71,7 +83,6 @@ public class CadastraPlaylistActivity extends BasicActivity {
             }
         });
 
-        listView = (ListView) findViewById(R.id.listView);
         progressView = findViewById(R.id.progress);
 
         cadastrar.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +110,7 @@ public class CadastraPlaylistActivity extends BasicActivity {
                 super.onPostExecute(musicas);
                 progressView.setVisibility(View.GONE);
                 adapter.setItems(musicas);
-                listView.setAdapter(adapter);
+                recyclerView.setAdapter(adapter);
             }
         }.execute();
     }
@@ -152,7 +163,7 @@ public class CadastraPlaylistActivity extends BasicActivity {
         if (requestCode == REQUEST_CODE_SELECIONA_MUSICA) {
             if (resultCode == Activity.RESULT_OK) {
                 long[] ids = data.getLongArrayExtra("musicas_ids");
-                Toast.makeText(this, "Lista --> "+Arrays.toString(ids), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Lista --> "+Arrays.toString(ids), Toast.LENGTH_SHORT).show();
                 List<Musica> novaLista = new ArrayList<>();
                 for (Long id: ids) {
                     Musica musica = getCustomApplication().getMusicasControl().findMusicaById(id);
